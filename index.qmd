@@ -9,4 +9,4 @@ about:
 
 About me
 
-I was born in Taiwan and I moved to Vancouver when I was 10 years old. I did my highschool in Vancouver and I went to U of Waterloo for my undergraduate degree in software engineering. I have mostly worked as a full-stack development intern in multiple companies. By joining MDSCL, I hope to gain relevant technical skills, make valuable connections, and advance my career.
+I was born in Taiwan and I moved to Vancouver when I was 10 years old. I did my highschool in Vancouver and I went to University of Waterloo for my undergraduate degree in software engineering. I have mostly worked as a full-stack development intern in multiple companies. By joining MDSCL, I hope to gain relevant technical skills, make valuable connections, and advance my career.
