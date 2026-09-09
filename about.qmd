@@ -5,7 +5,7 @@ title: "About"
 ##
 Background
 
-I was born in Taipei, Taiwan, and I moved to Vancouver when I was 10. I took IB in highschool then I moved to Kitchener, Waterloo for my undergraduate studies.
+I was born in Taipei, Taiwan, and I moved to Vancouver when I was 10. I finished elementary school and highschool in Vancouver, then I moved to Kitchener, Waterloo for my undergraduate studies.
 
 ##
 Why Data Science
