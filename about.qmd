@@ -1,0 +1,18 @@
+---
+title: "About"
+---
+
+##
+Background
+
+I was born in Taipei, Taiwan, and I moved to Vancouver when I was 10. I took IB in highschool then I moved to Kitchener, Waterloo for my undergraduate studies.
+
+##
+Why Data Science
+
+I did mostly full-stack web development for my co-ops during undergrad, and I wanted to pivot into more data analysis jobs. I am also interested in learning about the base concepts behind AI and machine learning. In addition, I am intrigued by the linguistics courses and its applications in AI.
+
+##
+Outside of data science
+
+Outside of data science, I like playing sports including badminton, volleyball, golf, and also going to the gym. I enjoy social activities such as karaoke and board games. I am also big into gaming.
