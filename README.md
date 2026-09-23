@@ -1,25 +1,42 @@
-# mds-website
+# echen-code.github.io
 
-This is Ethan Chen's Quarto website, with posts written in Quarto with R and Python.
+Personal data science blog built with Quarto, including two reproducible
+computational posts (Python and R) comparing GDP per capita in Taiwan and
+Canada, using Gapminder dataset.
 
-## Build from a fresh clone
+## Prerequisites
 
-Install Quarto, R 4.6.1, Python 3.14, and `uv` first. Then run:
+- Quarto >= 1.5
+- uv >= 0.5
+- R >= 4.4
+- renv bootstraps itself on first `quarto render`
 
-```sh
-git clone <repository-url>
-cd mds-website
+## Build instructions (from a clean clone)
 
-# Restore the R environment and activate it for this project.
-Rscript -e 'renv::restore(prompt = FALSE)'
+Run all commands from the repository top level.
 
-# Create the Python environment from pyproject.toml and uv.lock.
-uv sync --locked
+```bash
+git clone https://github.com/echen-code/mds-website.git
+cd ~/mds-website
 
-# Render the site into docs/ for GitHub Pages.
-quarto render
+# Python environment
+uv sync
+```
+```r
+# R environment — start R at the repo top level (e.g. `R` in this directory)
+renv::restore()
+```
+```bash
+# Render the whole site from top level 
+uv run quarto render
 ```
 
-The rendered site is written to `docs/`. Open `docs/index.html` locally to check the result, or publish the repository with GitHub Pages configured to serve from the `docs/` folder on the main branch.
+## Viewing the built site
+Live site: https://echen-code.github.io/mds-website/
 
-The analysis data in both posts comes from [Gapminder](https://www.gapminder.org/data/) and is distributed under its [CC BY 4.0 licence](https://www.gapminder.org/license/).
+## Data
+
+Both posts use `gapminder.csv`, downloaded from the Software Carpentry
+r-novice-gapminder lesson materials
+(https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/main/episodes/data/gapminder_data.csv),
+itself an excerpt of Gapminder.org data (CC BY 4.0).
