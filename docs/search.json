@@ -4,7 +4,7 @@
     "href": "blog.html",
     "title": "Blog",
     "section": "",
-    "text": "My first weeks in MDS\n\n\n\n\n\n\n\n\nSep 9, 2026\n\n\nEthan Chen\n\n\n\n\n\nNo matching items"
+    "text": "Python Analysis: GDP per Capita: Taiwan vs. Canada\n\n\n\n\n\n\n\n\nSep 23, 2026\n\n\nEthan Chen\n\n\n\n\n\n\n\n\n\n\n\n\nR Analysis: GDP per Capita: Taiwan vs. Canada\n\n\n\n\n\n\n\n\nSep 23, 2026\n\n\nEthan Chen\n\n\n\n\n\n\n\n\n\n\n\n\nMy first weeks in MDS\n\n\n\n\n\n\n\n\nSep 9, 2026\n\n\nEthan Chen\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",
@@ -14,11 +14,25 @@
     "text": "About me\nI was born in Taiwan and I moved to Vancouver when I was 10 years old. I did my highschool in Vancouver and I went to University of Waterloo for my undergraduate degree in software engineering. I have mostly worked as a full-stack development intern in multiple companies. By joining MDSCL, I hope to gain relevant technical skills, make valuable connections, and advance my career."
   },
   {
+    "objectID": "posts/py_post/index.html",
+    "href": "posts/py_post/index.html",
+    "title": "Python Analysis: GDP per Capita: Taiwan vs. Canada",
+    "section": "",
+    "text": "Data: Gapminder (https://www.gapminder.org/data/), via the Software Carpentry r-novice-gapminder lesson (https://github.com/swcarpentry/r-novice-gapminder), CC BY 4.0.\n\nimport pandas as pd\nimport matplotlib.pyplot as plt\n\ndf = pd.read_csv(\"gapminder.csv\")\n\n\ngdp_compare = df[df[\"country\"].isin([\"Taiwan\", \"Canada\"])].copy()\ngdp_compare[\"gdp_total_billions\"] = (gdp_compare[\"gdpPercap\"] * gdp_compare[\"pop\"]) / 1e9\ngdp_compare.head()\n\n\n\n\n\n\n\n\ncountry\nyear\npop\ncontinent\nlifeExp\ngdpPercap\ngdp_total_billions\n\n\n\n\n240\nCanada\n1952\n14785584.0\nAmericas\n68.75\n11367.16112\n168.070116\n\n\n241\nCanada\n1957\n17010154.0\nAmericas\n69.96\n12489.95006\n212.455974\n\n\n242\nCanada\n1962\n18985849.0\nAmericas\n71.30\n13462.48555\n255.596718\n\n\n243\nCanada\n1967\n20819767.0\nAmericas\n72.13\n16076.58803\n334.710817\n\n\n244\nCanada\n1972\n22284500.0\nAmericas\n72.88\n18970.57086\n422.749686\n\n\n\n\n\n\n\n\ndef compute(group):\n    start = group.loc[group[\"year\"].idxmin()]\n    end = group.loc[group[\"year\"].idxmax()]\n    years = end[\"year\"] - start[\"year\"]\n    rate = (end[\"gdpPercap\"] / start[\"gdpPercap\"]) ** (1 / years) - 1\n    return pd.Series(\n        {\n            \"start_year\": start[\"year\"],\n            \"end_year\": end[\"year\"],\n            \"gdpPercap_start\": start[\"gdpPercap\"],\n            \"gdpPercap_end\": end[\"gdpPercap\"],\n            \"cagr_pct\": rate * 100,\n        }\n    )\n\n\ngrowth_table = gdp_compare.groupby(\"country\").apply(compute).reset_index()\ngrowth_table.round(2)\n\n\n\n\n\n\n\n\ncountry\nstart_year\nend_year\ngdpPercap_start\ngdpPercap_end\ncagr_pct\n\n\n\n\n0\nCanada\n1952.0\n2007.0\n11367.16\n36319.24\n2.13\n\n\n1\nTaiwan\n1952.0\n2007.0\n1206.95\n28718.28\n5.93\n\n\n\n\n\n\n\n\nplt.figure(figsize=(8, 5))\n\nfor country, group in gdp_compare.groupby(\"country\"):\n    plt.plot(group[\"year\"], group[\"gdpPercap\"], marker = \"o\", label = country)\n\nplt.title(\"GDP per Capita: Taiwan vs. Canada\")\nplt.xlabel(\"Year\")\nplt.ylabel(\"GDP per Capita (USD)\")\nplt.legend()\nplt.grid(True, linestyle = \"--\", alpha=0.6)\nplt.tight_layout()\n\nplt.show()\n\n\n\n\n\n\n\nFigure 1: GDP per Capita Comparison: Taiwan vs. Canada"
+  },
+  {
     "objectID": "posts/first-weeks/index.html",
     "href": "posts/first-weeks/index.html",
     "title": "My first weeks in MDS",
     "section": "",
     "text": "Dinner with from friends on campus after imagine day.\n\n\nOrientation days were nerve-wracking, sitting long hours, trying to absorb all the information, and meeting professors and classmates for the first time. However, I ended up meeting a lot of new friends, many that come from similar and also different backgrounds.\nFirst week of school was not too bad. It was a scramble to get to the classrooms and figure out breaks to eat, but in general it went pretty smoothly.\nI am feeling ok, a little anxious for the workload and quizzes that are about to come, but also excited to enjoy campus life and work on some fun projects."
+  },
+  {
+    "objectID": "posts/r_post/index.html",
+    "href": "posts/r_post/index.html",
+    "title": "R Analysis: GDP per Capita: Taiwan vs. Canada",
+    "section": "",
+    "text": "library(readr)\nlibrary(dplyr)\nlibrary(ggplot2)\nlibrary(knitr)\n\ndf &lt;- read_csv(\"gapminder.csv\")\n\nData: Gapminder (https://www.gapminder.org/data/), via the Software Carpentry r-novice-gapminder lesson (https://github.com/swcarpentry/r-novice-gapminder), CC BY 4.0.\n\ngdp_compare &lt;- df |&gt;\n  filter(country %in% c(\"Taiwan\", \"Canada\")) |&gt;\n  select(country, year, gdpPercap, pop) |&gt;\n  mutate(gdp_total_billions = (gdpPercap * pop) / 1e9)\n\nhead(gdp_compare)\n\n# A tibble: 6 × 5\n  country  year gdpPercap      pop gdp_total_billions\n  &lt;chr&gt;   &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;              &lt;dbl&gt;\n1 Canada   1952    11367. 14785584               168.\n2 Canada   1957    12490. 17010154               212.\n3 Canada   1962    13462. 18985849               256.\n4 Canada   1967    16077. 20819767               335.\n5 Canada   1972    18971. 22284500               423.\n6 Canada   1977    22091. 23796400               526.\n\n\n\nggplot(gdp_compare, aes(x = year, y = gdpPercap, color = country)) + geom_line()\nlabs(x = \"Year\", y = \"GDP per capita\")\n\n&lt;ggplot2::labels&gt; List of 2\n $ x: chr \"Year\"\n $ y: chr \"GDP per capita\"\n\n\n\n\n\n\n\n\nFigure 1: GDP per capita over time, Taiwan vs. Canada (Gapminder data)."
   },
   {
     "objectID": "about.html",

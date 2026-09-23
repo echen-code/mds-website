@@ -2,6 +2,8 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/py_post/index.html",
+      "/posts/r_post/index.html",
       "/posts/first-weeks/index.html"
     ]
   }
