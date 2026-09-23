@@ -1,0 +1,68 @@
+---
+title: "Python Analysis: GDP per Capita: Taiwan vs. Canada"
+author: "Ethan Chen"
+date: "2026-09-23"
+---
+
+Data: Gapminder (https://www.gapminder.org/data/), 
+via the Software Carpentry r-novice-gapminder lesson 
+(https://github.com/swcarpentry/r-novice-gapminder), CC BY 4.0.
+
+```{python}
+#| label: setup
+#| message: false
+#| warning: false
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("gapminder.csv")
+```
+
+```{python}
+#| label: prep-data
+gdp_compare = df[df["country"].isin(["Taiwan", "Canada"])].copy()
+gdp_compare["gdp_total_billions"] = (gdp_compare["gdpPercap"] * gdp_compare["pop"]) / 1e9
+gdp_compare.head()
+```
+
+```{python}
+#| label: growth-rates
+def compute(group):
+    start = group.loc[group["year"].idxmin()]
+    end = group.loc[group["year"].idxmax()]
+    years = end["year"] - start["year"]
+    rate = (end["gdpPercap"] / start["gdpPercap"]) ** (1 / years) - 1
+    return pd.Series(
+        {
+            "start_year": start["year"],
+            "end_year": end["year"],
+            "gdpPercap_start": start["gdpPercap"],
+            "gdpPercap_end": end["gdpPercap"],
+            "cagr_pct": rate * 100,
+        }
+    )
+
+
+growth_table = gdp_compare.groupby("country").apply(compute).reset_index()
+growth_table.round(2)
+```
+
+```{python}
+#| label: fig-gdp-comparison
+#| fig-cap: "GDP per Capita Comparison: Taiwan vs. Canada"
+#| fig-alt: "Line plot showing GDP per capita trends for Taiwan and Canada from Gapminder data."
+
+plt.figure(figsize=(8, 5))
+
+for country, group in gdp_compare.groupby("country"):
+    plt.plot(group["year"], group["gdpPercap"], marker = "o", label = country)
+
+plt.title("GDP per Capita: Taiwan vs. Canada")
+plt.xlabel("Year")
+plt.ylabel("GDP per Capita (USD)")
+plt.legend()
+plt.grid(True, linestyle = "--", alpha=0.6)
+plt.tight_layout()
+
+plt.show()
+```

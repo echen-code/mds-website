@@ -1,0 +1,40 @@
+---
+title: "R Analysis: GDP per Capita: Taiwan vs. Canada"
+author: "Ethan Chen"
+date: "2026-09-23"
+---
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(knitr)
+
+df <- read_csv("gapminder.csv")
+```
+
+Data: Gapminder (https://www.gapminder.org/data/), 
+via the Software Carpentry r-novice-gapminder lesson 
+(https://github.com/swcarpentry/r-novice-gapminder), CC BY 4.0.
+
+```{r}
+#| label: prep-data
+gdp_compare <- df |>
+  filter(country %in% c("Taiwan", "Canada")) |>
+  select(country, year, gdpPercap, pop) |>
+  mutate(gdp_total_billions = (gdpPercap * pop) / 1e9)
+
+head(gdp_compare)
+```
+
+
+
+```{r}
+#| label: fig-gdp-percap
+#| fig-cap: "GDP per capita over time, Taiwan vs. Canada (Gapminder data)."
+ggplot(gdp_compare, aes(x = year, y = gdpPercap, color = country)) + geom_line()
+labs(x = "Year", y = "GDP per capita")
+```
